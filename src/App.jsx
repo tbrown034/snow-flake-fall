@@ -27,7 +27,7 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-blue-200 text-blue-950 dark:text-blue-100 dark:bg-blue-900">
+    <div className="flex flex-col justify-between min-h-screen px-2 bg-blue-200 text-blue-950 dark:text-blue-100 dark:bg-blue-900">
       <Header toggleTheme={toggleTheme} />
       {!isGameMode ? (
         <Menu toggleMenu={toggleMenu} />
