@@ -1,5 +1,5 @@
 import React from "react";
-import Snowman from "./Snowman"; // Assuming Snowman is the component with the icon
+import Snowman from "../GamePieces/Snowman"; // Assuming Snowman is the component with the icon
 
 export default function SnowmanArea() {
   return (

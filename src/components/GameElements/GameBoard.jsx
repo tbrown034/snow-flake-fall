@@ -1,15 +1,15 @@
 // Game.jsx
 import React from "react";
-import SnowBar from "./GamePieces/SnowBar";
-import SnowFallArea from "./GamePieces/SnowFallArea";
+import SnowBar from "./SnowBar";
+import SnowFlakeArea from "./SnowFlakeArea";
 
-export default function Game({ toggleMenu }) {
+export default function GameBoard({ toggleMenu }) {
   return (
     <>
       <div className="flex w-full gap-2 p-2 border-2 border-blue-950 dark:border-blue-100">
         <div className="flex flex-col w-4/5 gap-2 ">
           <div className="p-2 min-h-60 dark:border-blue-200 ">
-            <SnowFallArea />
+            <SnowFlakeArea />
           </div>
         </div>
         <div className="flex w-1/5 p-2 border-2 border-blue-800 border-dotted">

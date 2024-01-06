@@ -1,9 +1,9 @@
 // App.jsx
 import React, { useState, useEffect } from "react";
-import Footer from "./components/Footer.jsx";
-import Header from "./components/Header.jsx";
-import Menu from "./components/Menu.jsx";
-import Game from "./components/Game.jsx";
+import Footer from "./components/UI/Footer.jsx";
+import Header from "./components/UI/Header.jsx";
+import Menu from "./components/UI/Menu.jsx";
+import GameBoard from "./components/GameElements/GameBoard";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -32,7 +32,7 @@ function App() {
       {!isGameMode ? (
         <Menu toggleMenu={toggleMenu} />
       ) : (
-        <Game toggleMenu={toggleMenu} />
+        <GameBoard toggleMenu={toggleMenu} />
       )}
       <Footer />
     </div>

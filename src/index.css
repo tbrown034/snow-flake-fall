@@ -26,10 +26,10 @@
   animation-name: snowflake-fall; /* Name of the animation */
   animation-fill-mode: forwards;
 
-  animation-duration: 20s; /* How long it takes to complete one cycle */
+  animation-duration: 10s; /* How long it takes to complete one cycle */
   animation-timing-function: linear; /* The speed curve of the animation */
   animation-fill-mode: forwards;
-  animation-iteration-count: 1; /* How many times the animation should repeat */
+  animation-iteration-count: 10; /* How many times the animation should repeat */
   z-index: 2;
 }
 
