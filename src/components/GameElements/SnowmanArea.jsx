@@ -3,7 +3,7 @@ import Snowman from "../GamePieces/Snowman"; // Assuming Snowman is the componen
 
 export default function SnowmanArea() {
   return (
-    <div className="flex flex-col h-10 overflow-hidden ">
+    <div className="flex flex-col ">
       <Snowman />
     </div>
   );

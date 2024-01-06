@@ -1,14 +1,10 @@
+// SnowFlakeArea.jsx
 import React, { useEffect, useState } from "react";
-import SnowFlake from "../GamePieces/SnowFlake"; // Assuming SnowFlake is in the same directory
+import SnowFlake from "../GamePieces/SnowFlake"; // Adjust the path as necessary
 import SnowmanArea from "./SnowmanArea";
 
-export default function SnowFlakeArea() {
+export default function SnowFlakeArea({ incrementBlueCount }) {
   const [snowflakes, setSnowflakes] = useState([]);
-  const [snowBarCount, setSnowBarCount] = useState(0);
-
-  function incrementBlueCount() {
-    setSnowBarCount((prevCount) => prevCount + 1);
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,13 +17,6 @@ export default function SnowFlakeArea() {
     return () => clearInterval(interval);
   }, []);
 
-  // Use useEffect to log the snowBarCount when it changes
-  useEffect(() => {
-    if (snowBarCount > 0) {
-      console.log("clicked blue", snowBarCount);
-    }
-  }, [snowBarCount]);
-
   return (
     <>
       <div className="relative w-full overflow-hidden h-96">
@@ -35,7 +24,11 @@ export default function SnowFlakeArea() {
           <SnowFlake
             key={flake.id}
             color={flake.color}
-            onClick={incrementBlueCount}
+            onClick={() => {
+              if (flake.color === "blue") {
+                incrementBlueCount();
+              }
+            }}
           />
         ))}
       </div>

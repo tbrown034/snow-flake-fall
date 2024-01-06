@@ -8,6 +8,9 @@
   0% {
     transform: translateY(-10%); /* Start just above the container */
   }
+  50% {
+    transform: translateY(100vh); /* End below the container */
+  }
   100% {
     transform: translateY(100vh); /* End below the container */
   }
@@ -31,6 +34,14 @@
   animation-fill-mode: forwards;
   animation-iteration-count: 10; /* How many times the animation should repeat */
   z-index: 2;
+}
+
+/* Add this to your CSS file */
+.clicked-snowflake {
+  transform: scale(1.5); /* Grow the snowflake */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Add a glow or outline effect */
+  opacity: 0; /* Fade out the snowflake */
+  transition: transform 0.5s, opacity 0.5s; /* Smooth transition for the effects */
 }
 
 .snowman {
