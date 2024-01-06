@@ -3,7 +3,7 @@ import Snowman from "./Snowman"; // Assuming Snowman is the component with the i
 
 export default function SnowmanArea() {
   return (
-    <div className="flex items-end justify-start h-20 border-2 border-blue-800 border-dotted dark:border-blue-200">
+    <div className="flex flex-col h-10 overflow-hidden ">
       <Snowman />
     </div>
   );

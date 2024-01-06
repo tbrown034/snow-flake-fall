@@ -2,22 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-/* styles.css */
-/* styles.css */
-@keyframes fall {
+/* src/index.css */
+/* src/index.css */
+@keyframes snowflake-fall {
   0% {
-    transform: translateY(-10%);
+    transform: translateY(-10%); /* Start just above the container */
   }
   100% {
-    transform: translateY(110%);
+    transform: translateY(100vh); /* End below the container */
   }
 }
 
-/* styles.css - Add this to your existing keyframes */
-/* styles.css - Add this to your existing keyframes */
+@keyframes snowman-move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(90%);
+  }
+}
+
 .snowflake {
-  position: absolute;
-  top: -5vh; /* Start just above the screen */
-  left: 50%; /* Start at the middle of the screen */
-  animation: fall linear infinite;
+  animation-name: snowflake-fall; /* Name of the animation */
+  animation-fill-mode: forwards;
+
+  animation-duration: 20s; /* How long it takes to complete one cycle */
+  animation-timing-function: linear; /* The speed curve of the animation */
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1; /* How many times the animation should repeat */
+  z-index: 2;
+}
+
+.snowman {
+  animation-name: snowman-move; /* Name of the animation */
+  animation-duration: 10s; /* How long it takes to complete one cycle */
+  animation-timing-function: linear; /* The speed curve of the animation */
+  animation-iteration-count: infinite; /* How many times the animation should repeat */
+  animation-direction: alternate; /* Animation direction (normal/reverse/alternate/alternate-reverse) */
+  z-index: 1;
 }

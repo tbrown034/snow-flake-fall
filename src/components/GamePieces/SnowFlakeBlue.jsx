@@ -1,7 +1,16 @@
+// src/components/GamePieces/SnowFlakeBlue.jsx
+import React from "react";
+
 export default function SnowFlakeBlue() {
+  const style = {
+    top: "-5%", // Start just above the container
+    left: `${Math.random() * 100}%`, // Random horizontal start position
+  };
+
   return (
-    <>
-      <i class="fa-solid fa-snowflake  text-blue-800 "></i>
-    </>
+    <i
+      className="absolute text-blue-500 fa-solid fa-snowflake snowflake"
+      style={style}
+    ></i>
   );
 }
