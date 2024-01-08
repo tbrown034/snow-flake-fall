@@ -7,19 +7,25 @@ export default function SnowFlakeArea({
   incrementGameSpeed,
   gameOver,
   pauseSnowman,
+  gameSpeed,
+  handleCollision,
+  snowmanPosition,
+  snowmanSize, // Assuming this is an object with {width, height}
+  flakeSize, // Assuming this is the diameter of the flake
 }) {
   const [snowflakes, setSnowflakes] = useState([]);
-  const [gameSpeed, setGameSpeed] = useState(1); // Initial game speed multiplier
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (!gameOver && !pauseSnowman) {
-        // Create a new snowflake
         const rand = Math.random();
         const color = rand > 0.8 ? "blue" : rand > 0.6 ? "red" : "white";
-        setSnowflakes((prev) => [...prev, { color, id: Math.random() }]);
+        setSnowflakes((prev) => [
+          ...prev,
+          { color, id: Math.random(), position: getRandomPosition() },
+        ]);
       }
-    }, 1000 / gameSpeed); // Game speed affects interval
+    }, 1000 / gameSpeed);
 
     return () => clearInterval(interval);
   }, [gameOver, pauseSnowman, gameSpeed]);
@@ -27,14 +33,42 @@ export default function SnowFlakeArea({
   const handleSnowflakeClick = (flake) => {
     if (flake.color === "blue") {
       incrementBlueCount();
+      setGameSpeed((prevSpeed) => Math.max(prevSpeed * 0.9, 0.1)); // Decrease speed by 10%
     } else if (flake.color === "red") {
-      setGameSpeed((prevSpeed) => prevSpeed * 1.1); // Increase game speed by 10%
-      incrementGameSpeed();
+      incrementGameSpeed(); // Increase game speed by 10%
+      setGameSpeed((prevSpeed) => prevSpeed * 1.1);
     }
-    // Remove the clicked snowflake
     setSnowflakes((prev) =>
       prev.filter((snowflake) => snowflake.id !== flake.id)
     );
+  };
+
+  // Function to check collision with the snowman
+  const doesCollideWithSnowman = (flake) => {
+    const flakeCenterX = parseInt(flake.position.left) + flakeSize / 2;
+    const flakeCenterY = parseInt(flake.position.top) + flakeSize / 2;
+
+    const snowmanCenterX =
+      parseInt(snowmanPosition.left) + snowmanSize.width / 2;
+    const snowmanCenterY =
+      parseInt(snowmanPosition.top) + snowmanSize.height / 2;
+
+    const distance = Math.sqrt(
+      Math.pow(flakeCenterX - snowmanCenterX, 2) +
+        Math.pow(flakeCenterY - snowmanCenterY, 2)
+    );
+    return (
+      distance <
+      flakeSize / 2 + Math.min(snowmanSize.width, snowmanSize.height) / 2
+    );
+  };
+
+  // Function to get a random position for the snowflake
+  const getRandomPosition = () => {
+    return {
+      left: `${Math.random() * 80}%`,
+      top: `${Math.random() * 80}%`,
+    };
   };
 
   return (
@@ -44,10 +78,16 @@ export default function SnowFlakeArea({
           key={flake.id}
           id={flake.id}
           color={flake.color}
-          onClick={() => handleSnowflakeClick(flake)}
+          style={{ left: flake.position.left, top: flake.position.top }}
+          onClick={() => {
+            handleSnowflakeClick(flake);
+            if (doesCollideWithSnowman(flake)) {
+              handleCollision();
+            }
+          }}
         />
       ))}
-      <Snowman />
+      <Snowman position={snowmanPosition} size={snowmanSize} />
     </div>
   );
 }

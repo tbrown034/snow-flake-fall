@@ -8,6 +8,11 @@ export default function GameBoard({ toggleMenu }) {
   const [gameOver, setGameOver] = useState(false);
   const [pauseSnowman, setPauseSnowman] = useState(false);
   const [highScore, setHighScore] = useState(0);
+  const [gameSpeed, setGameSpeed] = useState(0.4);
+
+  const incrementGameSpeed = () => {
+    setGameSpeed((prevSpeed) => prevSpeed * 1.1);
+  };
 
   useEffect(() => {
     if (snowBarCount > highScore) {
@@ -26,7 +31,7 @@ export default function GameBoard({ toggleMenu }) {
       setSnowBarCount((prevCount) => {
         const updatedCount = prevCount + 1;
         if (updatedCount % 10 === 0) {
-          setShovels((prev) => prev + 1); // Add a shovel every 10 blue clicks
+          addShovel();
         }
         return updatedCount;
       });
@@ -53,21 +58,27 @@ export default function GameBoard({ toggleMenu }) {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-12 p-2 border-4 rounded-lg border-blue-950 dark:border-blue-100">
+      <div className="grid grid-cols-12 gap-4 p-4">
         <div className="col-span-8">
           <SnowFlakeArea
             incrementBlueCount={incrementBlueCount}
+            incrementGameSpeed={incrementGameSpeed}
             gameOver={gameOver}
             addShovel={addShovel}
             setGameOver={setGameOver}
             pauseSnowman={pauseSnowman}
+            gameSpeed={gameSpeed}
           />
         </div>
         <div className="col-span-4">
-          <SnowBar count={snowBarCount} shovels={shovels} />
+          <SnowBar
+            count={snowBarCount}
+            shovels={shovels}
+            gameSpeed={gameSpeed}
+          />
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-2">
         <button
           onClick={toggleMenu}
           className="p-2 px-8 border-2 rounded-lg border-blue-950 hover:bg-blue-400 active:bg-blue-600 dark:border-blue-100"

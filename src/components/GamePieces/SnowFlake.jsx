@@ -14,7 +14,7 @@ export default function SnowFlake({ color, id, onClick }) {
   return (
     <div
       className={`snowflake absolute w-8 h-8 ${colorClasses[color]} rounded-full cursor-pointer
-                  transition-transform duration-1000 ${animationClass}`}
+                  transition-transform duration-75 ${animationClass}`}
       style={{ left: `${Math.random() * 80}%`, top: `${Math.random() * 80}%` }}
       onClick={() => onClick({ color, id })}
     />
