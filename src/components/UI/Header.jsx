@@ -7,7 +7,7 @@ export default function Header({ toggleTheme }) {
         SnowFlakeFall
       </h1>
       <button
-        className="px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-purple-600 border-2 border-purple-600 rounded-lg hover:bg-purple-500 active:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300 dark:border-purple-200 dark:hover:bg-purple-400 dark:active:bg-purple-600"
+        className="p-2 text-sm font-semibold text-white transition-colors duration-300 bg-purple-600 border-2 border-purple-600 rounded-lg hover:bg-purple-500 active:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-300 dark:border-purple-200 dark:hover:bg-purple-400 dark:active:bg-purple-600"
         onClick={toggleTheme}
       >
         Light/Dark Mode

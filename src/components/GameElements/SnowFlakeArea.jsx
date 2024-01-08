@@ -19,7 +19,7 @@ export default function SnowFlakeArea({
 
         setSnowflakes((prev) => [
           ...prev,
-          { color, id: Math.random(), left: `${Math.random() * 100}%` },
+          { color, id: Math.random(), left: `${Math.random() * 75}%` },
         ]);
       }
     }, 1000);
@@ -33,7 +33,7 @@ export default function SnowFlakeArea({
   };
 
   return (
-    <div className="flex flex-col justify-between snowflake-area min-h-96">
+    <div className="flex flex-col justify-between snowflake-area ">
       <div>
         {snowflakes.map((flake) => (
           <SnowFlake
@@ -43,7 +43,6 @@ export default function SnowFlakeArea({
               if (flake.color === "blue") {
                 handleSnowflakeClick(flake.id);
               }
-              // If red snowflake is clicked, you may want to trigger some game over logic
             }}
           />
         ))}

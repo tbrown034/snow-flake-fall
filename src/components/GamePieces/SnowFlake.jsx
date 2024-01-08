@@ -16,7 +16,7 @@ export default function SnowFlake({ color, onClick }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsClicked(true); // Remove snowflake after it falls
-    }, 10000); // Match the duration of the snowflake-fall animation
+    }, 1000); // Match the duration of the snowflake-fall animation
 
     return () => clearTimeout(timeout);
   }, []);
@@ -28,7 +28,7 @@ export default function SnowFlake({ color, onClick }) {
 
   return (
     <i
-      className={`text-6xl ${
+      className={`text-lg ${
         colorClasses[color]
       } fa-solid fa-snowflake snowflake-fall snowflake ${
         isClicked ? "clicked-snowflake" : ""

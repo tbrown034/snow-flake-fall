@@ -5,17 +5,52 @@
 /* Custom Styles */
 @keyframes snowflake-fall {
   0% {
-    transform: translateY(40%); /* Start off-screen */
+    transform: translateY(
+      -10%
+    ); /* Start slightly off-screen to ensure a smooth entrance */
     opacity: 1; /* Fully visible at the start */
   }
-  90% {
-    transform: translateY(90%); /* Start off-screen */
-
-    opacity: 1; /* Keep the snowflake fully visible during most of its fall */
-  }
   100% {
-    transform: translateY(100%); /* End at the bottom of the screen */
-    opacity: 0; /* Fade out the snowflake */
+    transform: translateY(
+      100%
+    ); /* End slightly off-screen to ensure a smooth exit */
+    opacity: 0.1; /* Fade out the snowflake */
+  }
+}
+
+.snowflake {
+  position: absolute;
+  top: 0; /* Reset top position to ensure animation starts off-screen */
+  animation: snowflake-fall 1s linear infinite; /* Duration suitable for a game */
+  z-index: 10; /* Above other elements but below overlays like game over */
+}
+
+.snowflake:hover {
+  font-weight: bolder;
+  color: yellow;
+}
+
+.clicked-snowflake {
+  animation: none; /* Stops any ongoing animation */
+  opacity: 0; /* Hide immediately upon click */
+  pointer-events: none; /* Prevent further interaction after being clicked */
+}
+
+.snowflake-area {
+  position: relative;
+  min-height: 66vh; /* Two-thirds of the viewport height for the game area */
+}
+
+@keyframes snowman-move {
+  0% {
+    transform: translateX(
+      0
+    ); /* Start and end at the same position for a smooth loop */
+  }
+  50% {
+    transform: translateX(
+      calc(50%)
+    ); /* Move left to right, assuming snowman width of 4rem */
   }
 }
 
@@ -23,35 +58,18 @@
   0% {
     transform: translateX(0%);
   }
-  50% {
+  0% {
     transform: translateX(50%);
   }
-  100% {
+  0% {
     transform: translateX(
       100%
     ); /* Make the snowman go all the way to the right */
   }
 }
 
-.snowflake {
-  position: absolute;
-  top: 10%; /* Start off-screen */
-  animation-name: snowflake-fall; /* Name of the animation */
-  animation-fill-mode: forwards;
-  top: 0;
-
-  animation-duration: 1s; /* How long it takes to complete one cycle */
-  animation-timing-function: linear; /* The speed curve of the animation */
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1; /* How many times the animation should repeat */
-  z-index: 2;
-}
-
 .snowman {
-  animation: snowman-move 2s linear infinite alternate;
-}
-
-.clicked-snowflake {
-  opacity: 0;
-  pointer-events: none;
+  position: absolute;
+  bottom: 0; /* Positioned at the bottom of its container */
+  animation: snowman-move 10s linear infinite alternate; /* Smoother, slower movement */
 }
