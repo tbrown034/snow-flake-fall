@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function SnowFlake({ color, onClick }) {
-  const [isClicked, setIsClicked] = useState(false);
-
+export default function SnowFlake({ color, id, onClick }) {
+  // Tailwind classes for color
   const colorClasses = {
-    blue: "text-blue-500",
-    red: "text-red-700",
-    white: "text-white",
+    blue: "bg-blue-500",
+    red: "bg-red-700",
+    white: "bg-white",
   };
 
-  const handleClick = () => {
-    setIsClicked(true);
-    onClick();
-  };
+  // Determine animation class based on color
+  const animationClass = color === "white" ? "grow" : "fade-out";
 
   return (
-    <i
-      className={`text-4xl ${colorClasses[color]} fa-solid fa-snowflake ${
-        isClicked ? "opacity-0" : "opacity-100"
-      } transition-opacity duration-1000 ease-linear transform translate-y-full`}
-      style={{ left: `${Math.random() * 80}%` }}
-      onClick={handleClick}
-    ></i>
+    <div
+      className={`snowflake absolute w-8 h-8 ${colorClasses[color]} rounded-full cursor-pointer
+                  transition-transform duration-1000 ${animationClass}`}
+      style={{ left: `${Math.random() * 80}%`, top: `${Math.random() * 80}%` }}
+      onClick={() => onClick({ color, id })}
+    />
   );
 }

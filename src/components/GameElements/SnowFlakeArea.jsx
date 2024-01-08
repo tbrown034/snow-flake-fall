@@ -4,47 +4,47 @@ import Snowman from "../GamePieces/Snowman";
 
 export default function SnowFlakeArea({
   incrementBlueCount,
+  incrementGameSpeed,
   gameOver,
   pauseSnowman,
 }) {
   const [snowflakes, setSnowflakes] = useState([]);
+  const [gameSpeed, setGameSpeed] = useState(1); // Initial game speed multiplier
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (!gameOver && !pauseSnowman) {
-        // Randomly generate the color of the snowflake
+        // Create a new snowflake
         const rand = Math.random();
         const color = rand > 0.8 ? "blue" : rand > 0.6 ? "red" : "white";
-        // Create a new snowflake
         setSnowflakes((prev) => [...prev, { color, id: Math.random() }]);
       }
-    }, 1000);
+    }, 1000 / gameSpeed); // Game speed affects interval
 
     return () => clearInterval(interval);
-  }, [gameOver, pauseSnowman]);
+  }, [gameOver, pauseSnowman, gameSpeed]);
 
-  // Function to remove a snowflake
-  const removeSnowflake = (flakeId) => {
-    setSnowflakes((prev) => prev.filter((flake) => flake.id !== flakeId));
-  };
-
-  // Function to handle snowflake click
-  const handleSnowflakeClick = (flakeId) => {
-    if (!gameOver) {
-      removeSnowflake(flakeId);
+  const handleSnowflakeClick = (flake) => {
+    if (flake.color === "blue") {
       incrementBlueCount();
+    } else if (flake.color === "red") {
+      setGameSpeed((prevSpeed) => prevSpeed * 1.1); // Increase game speed by 10%
+      incrementGameSpeed();
     }
+    // Remove the clicked snowflake
+    setSnowflakes((prev) =>
+      prev.filter((snowflake) => snowflake.id !== flake.id)
+    );
   };
 
   return (
-    <div className="snowflake-area">
+    <div className="relative w-full h-screen overflow-hidden snowflake-area">
       {snowflakes.map((flake) => (
         <SnowFlake
           key={flake.id}
           id={flake.id}
           color={flake.color}
-          removeSnowflake={removeSnowflake}
-          onClick={() => handleSnowflakeClick(flake.id)}
+          onClick={() => handleSnowflakeClick(flake)}
         />
       ))}
       <Snowman />

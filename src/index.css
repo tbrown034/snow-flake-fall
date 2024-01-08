@@ -2,28 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The container where snowflakes will fall */
 .snowflake-area {
   @apply relative;
-  min-height: 50vh; /* Adjust if necessary to fit the game area */
+  min-height: 100vh; /* Full height to allow accumulation */
 }
 
-/* Snowman moving animation */
-@keyframes snowman-move {
-  0%,
-  100% {
-    transform: translateX(0); /* Start and end at the original position */
+/* Styles for snowflakes */
+.snowflake {
+  @apply transition-all duration-1000;
+}
+
+/* Animation for white snowflakes */
+@keyframes grow-animation {
+  from {
+    @apply transform scale-100;
   }
-  50% {
-    transform: translateX(
-      calc(100% - 4rem)
-    ); /* Move left to right, assuming snowman width of 4rem */
+  to {
+    @apply transform scale-125;
   }
 }
 
-.snowman {
-  position: absolute;
-  bottom: 0; /* Positioned at the bottom of the container */
-  left: 50%; /* Start in the middle of the container */
-  transform: translateX(-50%); /* Center the snowman */
-  animation: snowman-move 10s linear infinite alternate; /* Smooth back and forth movement */
+.grow {
+  animation: grow-animation 0.5s ease-in-out forwards;
+}
+
+/* Animation for fading out on click */
+.fade-out {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out:active {
+  opacity: 0;
 }

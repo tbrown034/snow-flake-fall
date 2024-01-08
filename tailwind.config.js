@@ -4,18 +4,17 @@ export default {
 
   theme: {
     extend: {
-      keyframes: {
-        "snowflake-fall": {
-          "0%": { transform: "translateY(-10%)", opacity: "1" },
-          "100%": { transform: "translateY(100%)", opacity: "0" },
-        },
-      },
       animation: {
-        "snowflake-fall": "snowflake-fall 5s linear infinite",
+        fall: "fall 5s linear infinite", // Define a custom name for the animation
+      },
+      keyframes: {
+        fall: {
+          "0%": { transform: "translateY(0)", opacity: 1 },
+          "100%": { transform: "translateY(100vh)", opacity: 0 },
+        },
       },
     },
   },
-
   plugins: [],
   darkMode: "class",
 };
