@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div
-      className={`flex flex-col justify-between min-h-screen px-2 ${
+      className={`flex flex-col justify-between min-h-screen p-2 ${
         isDarkMode ? "bg-blue-900 text-blue-100" : "bg-blue-200 text-blue-950"
       }`}
     >

@@ -1,99 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SnowBar from "./SnowBar";
 import SnowFlakeArea from "./SnowFlakeArea";
 
 export default function GameBoard({ toggleMenu }) {
-  const [snowBarCount, setSnowBarCount] = useState(0);
-  const [shovels, setShovels] = useState(0);
+  const [score, setScore] = useState(0);
+  const [redCount, setRedCount] = useState(0);
+  const [gameSpeed, setGameSpeed] = useState(1); // Displayed as 1x to the user
+  const [gamePaused, setGamePaused] = useState(false);
   const [gameOver, setGameOver] = useState(false);
-  const [pauseSnowman, setPauseSnowman] = useState(false);
-  const [highScore, setHighScore] = useState(0);
-  const [gameSpeed, setGameSpeed] = useState(0.4);
 
-  const incrementGameSpeed = () => {
-    setGameSpeed((prevSpeed) => prevSpeed * 1.1);
-  };
-
-  useEffect(() => {
-    if (snowBarCount > highScore) {
-      setHighScore(snowBarCount);
-    }
-  }, [snowBarCount, highScore]);
-
-  const addShovel = () => {
-    if (!gameOver) {
-      setShovels((prevShovels) => prevShovels + 1);
+  const handleSnowflakeClick = (color) => {
+    if (!gamePaused && !gameOver) {
+      if (color === "blue") {
+        setScore((prev) => prev + 1);
+        setGameSpeed((prev) => Math.max(prev * 0.9, 0.1)); // Decrement by 10%
+      } else if (color === "red") {
+        setRedCount((prev) => prev + 1);
+        if (redCount >= 10) setGameOver(true); // Game over if 10 reds are on board
+        setGameSpeed((prev) => prev * 1.1); // Increment by 10%
+      }
     }
   };
 
-  const incrementBlueCount = () => {
-    if (!gameOver) {
-      setSnowBarCount((prevCount) => {
-        const updatedCount = prevCount + 1;
-        if (updatedCount % 10 === 0) {
-          addShovel();
-        }
-        return updatedCount;
-      });
-    }
+  const resetGame = () => {
+    setScore(0);
+    setRedCount(0);
+    setGameSpeed(1);
+    setGamePaused(false);
+    setGameOver(false);
   };
 
-  const useShovel = () => {
-    if (shovels > 0 && !pauseSnowman) {
-      setShovels((prev) => prev - 1);
-      setPauseSnowman(true);
-      setTimeout(() => {
-        setPauseSnowman(false);
-      }, 5000); // Pause snowman for 5 seconds
-    }
+  const togglePause = () => {
+    setGamePaused(!gamePaused);
   };
 
   return (
-    <>
-      {gameOver && (
-        <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-          <div>
-            <h1 className="text-3xl text-white">You Lose!</h1>
-            <h2 className="text-xl text-white">High Score: {highScore}</h2>
+    <div className="flex flex-col h-screen">
+      <SnowBar
+        score={score}
+        redCount={redCount}
+        gameSpeed={gameSpeed}
+        resetGame={resetGame}
+        togglePause={togglePause}
+        gameOver={gameOver}
+        gamePaused={gamePaused}
+      />
+      <SnowFlakeArea
+        handleSnowflakeClick={handleSnowflakeClick}
+        gameSpeed={gameSpeed}
+        gameOver={gameOver}
+        gamePaused={gamePaused}
+      />
+      {gamePaused && (
+        // Overlay when the game is paused
+        <div className="absolute top-0 left-0 z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+          <div className="p-4 border-4 border-red-600 rounded">
+            <h1 className="text-4xl font-bold text-white">Paused</h1>
           </div>
         </div>
       )}
-      <div className="grid grid-cols-12 gap-4 p-4">
-        <div className="col-span-8">
-          <SnowFlakeArea
-            incrementBlueCount={incrementBlueCount}
-            incrementGameSpeed={incrementGameSpeed}
-            gameOver={gameOver}
-            addShovel={addShovel}
-            setGameOver={setGameOver}
-            pauseSnowman={pauseSnowman}
-            gameSpeed={gameSpeed}
-          />
+      {gameOver && (
+        <div className="absolute top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-white">Game Over!</h1>
+            <button
+              onClick={resetGame}
+              className="px-6 py-3 text-lg text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+            >
+              Restart
+            </button>
+          </div>
         </div>
-        <div className="col-span-4">
-          <SnowBar
-            count={snowBarCount}
-            shovels={shovels}
-            gameSpeed={gameSpeed}
-          />
-        </div>
-      </div>
-      <div className="flex justify-center mt-2">
-        <button
-          onClick={toggleMenu}
-          className="p-2 px-8 border-2 rounded-lg border-blue-950 hover:bg-blue-400 active:bg-blue-600 dark:border-blue-100"
-        >
-          Go Back
-        </button>
-        {shovels > 0 && (
-          <button
-            onClick={useShovel}
-            className="p-2 px-8 ml-4 border-2 rounded-lg border-green-950 hover:bg-green-400 active:bg-green-600 dark:border-green-100"
-          >
-            Use Shovel (Pause Snowman)
-          </button>
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 }

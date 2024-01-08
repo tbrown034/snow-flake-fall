@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Header({ toggleTheme }) {
   return (
-    <header className="flex items-center justify-between p-4 bg-blue-200 shadow-md dark:bg-blue-800">
-      <h1 className="text-2xl font-bold text-blue-900 dark:text-blue-100">
+    <header className="flex items-center justify-between p-4">
+      <h1 className="text-2xl font-bold text-blue-900 sm:text-4xl dark:text-blue-100">
         SnowFlakeFall
       </h1>
       <button
