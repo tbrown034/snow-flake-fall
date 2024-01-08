@@ -2,53 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* src/index.css */
-/* src/index.css */
+/* Custom Styles */
 @keyframes snowflake-fall {
   0% {
-    transform: translateY(-10%); /* Start just above the container */
+    transform: translateY(40%); /* Start off-screen */
+    opacity: 1; /* Fully visible at the start */
   }
-  50% {
-    transform: translateY(100vh); /* End below the container */
+  90% {
+    transform: translateY(90%); /* Start off-screen */
+
+    opacity: 1; /* Keep the snowflake fully visible during most of its fall */
   }
   100% {
-    transform: translateY(100vh); /* End below the container */
+    transform: translateY(100%); /* End at the bottom of the screen */
+    opacity: 0; /* Fade out the snowflake */
   }
 }
 
 @keyframes snowman-move {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(50%);
   }
   100% {
-    transform: translateX(90%);
+    transform: translateX(
+      100%
+    ); /* Make the snowman go all the way to the right */
   }
 }
 
 .snowflake {
+  position: absolute;
+  top: 10%; /* Start off-screen */
   animation-name: snowflake-fall; /* Name of the animation */
   animation-fill-mode: forwards;
+  top: 0;
 
-  animation-duration: 10s; /* How long it takes to complete one cycle */
+  animation-duration: 1s; /* How long it takes to complete one cycle */
   animation-timing-function: linear; /* The speed curve of the animation */
   animation-fill-mode: forwards;
-  animation-iteration-count: 10; /* How many times the animation should repeat */
+  animation-iteration-count: 1; /* How many times the animation should repeat */
   z-index: 2;
 }
 
-/* Add this to your CSS file */
-.clicked-snowflake {
-  transform: scale(1.5); /* Grow the snowflake */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Add a glow or outline effect */
-  opacity: 0; /* Fade out the snowflake */
-  transition: transform 0.5s, opacity 0.5s; /* Smooth transition for the effects */
+.snowman {
+  animation: snowman-move 2s linear infinite alternate;
 }
 
-.snowman {
-  animation-name: snowman-move; /* Name of the animation */
-  animation-duration: 10s; /* How long it takes to complete one cycle */
-  animation-timing-function: linear; /* The speed curve of the animation */
-  animation-iteration-count: infinite; /* How many times the animation should repeat */
-  animation-direction: alternate; /* Animation direction (normal/reverse/alternate/alternate-reverse) */
-  z-index: 1;
+.clicked-snowflake {
+  opacity: 0;
+  pointer-events: none;
 }

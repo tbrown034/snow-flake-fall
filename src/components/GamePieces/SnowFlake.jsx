@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SnowFlake({ color, onClick }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -10,26 +10,31 @@ export default function SnowFlake({ color, onClick }) {
   };
 
   const style = {
-    top: "-5%",
-    left: `${Math.random() * 100}%`, // Random horizontal start position
+    left: `${Math.random() * 80}%`,
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsClicked(true); // Remove snowflake after it falls
+    }, 10000); // Match the duration of the snowflake-fall animation
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleClick = () => {
-    console.log(`${color} snowflake clicked!`);
-    setIsClicked(true); // Update the state to indicate the snowflake has been clicked
-
-    if (color === "blue") {
-      onClick(); // Call the onClick handler only if it's a blue snowflake
-    }
-
-    setTimeout(() => {
-      setIsClicked(false); // Reset the clicked state (optional)
-    }, 1000); // Time before the snowflake resets
+    setIsClicked(true);
+    onClick();
   };
 
-  const className = `absolute ${
-    colorClasses[color]
-  } fa-solid fa-snowflake snowflake ${isClicked ? "clicked-snowflake" : ""}`;
-
-  return <i className={className} style={style} onClick={handleClick}></i>;
+  return (
+    <i
+      className={`text-6xl ${
+        colorClasses[color]
+      } fa-solid fa-snowflake snowflake-fall snowflake ${
+        isClicked ? "clicked-snowflake" : ""
+      }`}
+      style={style}
+      onClick={handleClick}
+    ></i>
+  );
 }
