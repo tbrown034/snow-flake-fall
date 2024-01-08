@@ -3,7 +3,17 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        "snowflake-fall": {
+          "0%": { transform: "translateY(-10%)", opacity: "1" },
+          "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
+      },
+      animation: {
+        "snowflake-fall": "snowflake-fall 5s linear infinite",
+      },
+    },
   },
 
   plugins: [],

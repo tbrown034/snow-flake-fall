@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export default function SnowFlake({ color, onClick }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -9,18 +9,6 @@ export default function SnowFlake({ color, onClick }) {
     white: "text-white",
   };
 
-  const style = {
-    left: `${Math.random() * 80}%`,
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsClicked(true); // Remove snowflake after it falls
-    }, 1000); // Match the duration of the snowflake-fall animation
-
-    return () => clearTimeout(timeout);
-  }, []);
-
   const handleClick = () => {
     setIsClicked(true);
     onClick();
@@ -28,12 +16,10 @@ export default function SnowFlake({ color, onClick }) {
 
   return (
     <i
-      className={`text-lg ${
-        colorClasses[color]
-      } fa-solid fa-snowflake snowflake-fall snowflake ${
-        isClicked ? "clicked-snowflake" : ""
-      }`}
-      style={style}
+      className={`text-4xl ${colorClasses[color]} fa-solid fa-snowflake ${
+        isClicked ? "opacity-0" : "opacity-100"
+      } transition-opacity duration-1000 ease-linear transform translate-y-full`}
+      style={{ left: `${Math.random() * 80}%` }}
       onClick={handleClick}
     ></i>
   );
